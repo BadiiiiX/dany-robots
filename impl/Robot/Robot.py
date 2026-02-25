@@ -1,9 +1,14 @@
+from impl.Capacity.Capacity import Capacity
+from impl.Robot.RobotBuff import Buffs
 from impl.Robot.RobotType import RobotType
 
 
 class Robot:
-    def __init__(self, name: str, type: RobotType, hp: int, max_hp: int, attack: int, defense: int, speed: int, energy: int):
-        self.name = name #unique
+    """Représente un robot combattant avec ses statistiques, capacités et buffs actifs."""
+
+    def __init__(self, name: str, type: RobotType, hp: int, max_hp: int,
+                 attack: int, defense: int, speed: int, energy: int):
+        self.name = name
         self.type = type
         self.hp = hp
         self.max_hp = max_hp
@@ -11,9 +16,44 @@ class Robot:
         self.defense = defense
         self.speed = speed
         self.energy = energy
-        self.capacities = []
-        self.active_buffs = {}
+        self.capacities: list[Capacity] = []
+        self.active_buffs: Buffs = {}
 
+    # ------------------------------------------------------------------
+    # Helpers de combat
+    # ------------------------------------------------------------------
 
-    def __eq__(self, other):
+    def is_alive(self) -> bool:
+        """Retourne True si le robot a encore des PV."""
+        return self.hp > 0
+
+    def tick_buffs(self) -> list[str]:
+        """
+        Décrémente la durée de chaque buff actif.
+        """
+        messages = []
+        expired = []
+
+        for buff_name, buff in self.active_buffs.items():
+            buff["turns"] -= 1
+            if buff["turns"] <= 0:
+                expired.append(buff_name)
+
+        for buff_name in expired:
+            buff = self.active_buffs.pop(buff_name)
+            # Annule l'effet sur la stat si applicable (buffs de stat)
+            if "stat" in buff:
+                setattr(self, buff["stat"], getattr(self, buff["stat"]) - buff["value"])
+                messages.append(f"Le buff '{buff_name}' de {self.name} a expiré.")
+
+        return messages
+
+    # ------------------------------------------------------------------
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Robot):
+            return NotImplemented
         return self.name == other.name
+
+    def __repr__(self) -> str:
+        return f"Robot(name={self.name}, type={self.type.name}, hp={self.hp}/{self.max_hp})"

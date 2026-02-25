@@ -6,6 +6,7 @@ class CreateRobotMenu(Window):
 
     def __init__(self, ui):
         super().__init__(ui)
+        self.color = None
 
     def on_enter(self):
         pass
