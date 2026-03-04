@@ -12,11 +12,13 @@ class RobotUI:
 
     def __init__(self):
         pg.init()
+        pg.display.set_caption("Robot Arena")
         self.display = pg.display
         self.screen = self.display.set_mode((1280, 720))
         self.clock = pg.time.Clock()
         self.running = True
         self.current_window = Menu(self)
+        self.current_window.on_enter()
 
         while self.running:
             for event in pg.event.get():

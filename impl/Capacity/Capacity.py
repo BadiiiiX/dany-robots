@@ -1,6 +1,11 @@
+from __future__ import annotations
+
 import random
 from abc import ABC, abstractmethod
-from impl.Robot.Robot import Robot
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from impl.Robot.Robot import Robot
 
 
 class Capacity(ABC):

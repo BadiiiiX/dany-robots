@@ -19,10 +19,6 @@ class Robot:
         self.capacities: list[Capacity] = []
         self.active_buffs: Buffs = {}
 
-    # ------------------------------------------------------------------
-    # Helpers de combat
-    # ------------------------------------------------------------------
-
     def is_alive(self) -> bool:
         """Retourne True si le robot a encore des PV."""
         return self.hp > 0
@@ -41,18 +37,15 @@ class Robot:
 
         for buff_name in expired:
             buff = self.active_buffs.pop(buff_name)
-            # Annule l'effet sur la stat si applicable (buffs de stat)
             if "stat" in buff:
                 setattr(self, buff["stat"], getattr(self, buff["stat"]) - buff["value"])
                 messages.append(f"Le buff '{buff_name}' de {self.name} a expiré.")
 
         return messages
 
-    # ------------------------------------------------------------------
-
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, Robot):
-            return NotImplemented
+            return False
         return self.name == other.name
 
     def __repr__(self) -> str:

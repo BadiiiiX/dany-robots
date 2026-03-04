@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Robot de ouf",
+    "type": "ASSAULT",
+    "hp": 68,
+    "max_hp": 68,
+    "attack": 18,
+    "defense": 8,
+    "speed": 6,
+    "energy": 100
+  },
+  {
+    "name": "fdfsdfsd",
+    "type": "BALANCE",
+    "hp": 55,
+    "max_hp": 55,
+    "attack": 25,
+    "defense": 5,
+    "speed": 15,
+    "energy": 100
+  }
+]

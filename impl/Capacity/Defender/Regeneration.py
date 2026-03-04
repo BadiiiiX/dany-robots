@@ -5,8 +5,10 @@ from impl.Robot.Robot import Robot
 class Regeneration(Capacity):
     """Régénération : restaure 30 PV (coût : 50 énergie)."""
 
+    name = "Régénération"
+
     def __init__(self):
-        super().__init__("Régénération", 50)
+        super().__init__(Regeneration.name, 50)
 
     def execute(self, source: "Robot", target: "Robot") -> str:
         soin = 30
